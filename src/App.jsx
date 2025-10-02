@@ -50,7 +50,7 @@ function App() {
     loadProducts();
   }, []);
 
-  // Función para completar la orden
+  // Función para completar la orden (Combinando la limpieza del carrito y redirección)
   const handleOrderComplete = () => {
     clearCart();
     setTimeout(() => {
@@ -58,7 +58,7 @@ function App() {
     }, 5000);
   };
 
-  // Renderizar la vista actual
+  // Renderizar la vista actual (Lógica de ruteo de HEAD)
   const renderView = () => {
     switch (currentView) {
       case 'home':
@@ -114,6 +114,7 @@ function App() {
     }
   };
 
+  // El Return del componente principal resuelto
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
       <Header

@@ -7,6 +7,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+<<<<<<< HEAD
 
     "vercel-build": "CI=false react-scripts build",
 
@@ -21,6 +22,15 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
+=======
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "lucide-react": "^0.321.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+>>>>>>> f3098a58 (Mi tienda de mesas de parota)
     "react-scripts": "^5.0.1"
   },
   "browserslist": {
@@ -35,9 +45,19 @@
       "last 1 safari version"
     ]
   },
+<<<<<<< HEAD
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=8.0.0"
   }
 }
 
+=======
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.13"
+  }
+}
+>>>>>>> f3098a58 (Mi tienda de mesas de parota)

@@ -45,8 +45,12 @@
       "last 1 safari version"
     ]
 <<<<<<< HEAD
+<<<<<<< HEAD
   },
 <<<<<<< HEAD
+=======
+  },
+>>>>>>> f310e888 (Fix build permissions)
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=8.0.0"

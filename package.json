@@ -44,6 +44,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+<<<<<<< HEAD
   },
 <<<<<<< HEAD
   "engines": {
@@ -61,3 +62,7 @@
   }
 }
 >>>>>>> f3098a58 (Mi tienda de mesas de parota)
+=======
+  }
+}
+>>>>>>> 0051ed35 (Eliminar dependencias de Tailwind - usar CDN)

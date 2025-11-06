@@ -1,6 +1,22 @@
 # dependencies
 /node_modules
 
+# .gitignore
+# Este archivo indica a Git qué archivos y carpetas debe ignorar (no seguir ni subir
+# al repositorio). Úsalo para evitar subir archivos sensibles (por ejemplo, claves
+# en .env), dependencias instaladas localmente (/node_modules), archivos de build
+# y otros artefactos generados.
+#
+# Reglas comunes incluidas abajo:
+# - Ignorar archivos de entorno (.env)
+# - Ignorar la carpeta de dependencias (/node_modules)
+# - Ignorar la carpeta de producción (/build)
+# - Ignorar logs y archivos temporales del sistema
+#
+# Nota: Si accidentalmente subiste un archivo sensible antes de agregarlo aquí,
+# deberías eliminarlo del historial de git (borrar del repo remoto). Puedo ayudarte
+# con ese proceso si lo necesitas.
+
 # production
 /build
 

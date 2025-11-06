@@ -1,11 +1,11 @@
-// ProductModal.jsx
+﻿// ProductModal.jsx
 // Aquí va el componente para mostrar el modal de detalles del producto.
 import React, { useState } from 'react';
 import { X, Star, Check } from 'lucide-react';
 
 const ProductModal = ({ product, onClose, onAddToCart, onBuyNow }) => {
   const [mediaIndex, setMediaIndex] = useState(0);
-  // Construir lista de medios: video primero si existe, luego las imágenes.
+
   const mediaItems = (() => {
     const items = [];
     if (product.video) {
@@ -58,7 +58,6 @@ const ProductModal = ({ product, onClose, onAddToCart, onBuyNow }) => {
               />
             )}
 
-            {/* Controles del carrusel si hay más de un medio */}
             {mediaItems.length > 1 && (
               <>
                 <button
@@ -78,15 +77,12 @@ const ProductModal = ({ product, onClose, onAddToCart, onBuyNow }) => {
                   </svg>
                 </button>
 
-                {/* Indicadores de medios */}
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                   {mediaItems.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setMediaIndex(idx)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        idx === mediaIndex ? 'bg-amber-600 w-6' : 'bg-white/60'
-                      }`}
+                      className={`w-2 h-2 rounded-full transition-all ${idx === mediaIndex ? 'bg-amber-600 w-6' : 'bg-white/60'}`}
                       aria-label={`Medio ${idx + 1}`}
                     />
                   ))}
@@ -94,17 +90,14 @@ const ProductModal = ({ product, onClose, onAddToCart, onBuyNow }) => {
               </>
             )}
           </div>
-          
-          {/* Miniaturas de medios */}
+
           {mediaItems.length > 1 && (
             <div className="flex gap-2 p-4 overflow-x-auto">
               {mediaItems.map((item, idx) => (
                 <button
                   key={idx}
                   onClick={() => setMediaIndex(idx)}
-                  className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                    idx === mediaIndex ? 'border-amber-600' : 'border-gray-200 opacity-60 hover:opacity-100'
-                  }`}
+                  className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${idx === mediaIndex ? 'border-amber-600' : 'border-gray-200 opacity-60 hover:opacity-100'}`}
                   aria-label={item.type === 'video' ? `Video ${idx + 1}` : `Imagen ${idx + 1}`}
                 >
                   {item.type === 'video' ? (

@@ -1,43 +1,65 @@
-import React from 'react';
+﻿import React from 'react';
 import { Check, Star, MapPin } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import ProductCarousel from '../components/ProductCarousel';
 
 const Home = ({ products, onNavigate, onAddToCart, onViewDetails }) => {
+  const featuredProducts = products.filter((product) => product.featured);
+  const carouselProducts = featuredProducts.length > 0 ? featuredProducts.slice(0, 4) : products.slice(0, 4);
+
   return (
     <div>
-      {/* Carrusel de productos destacados */}
-      <ProductCarousel 
-        products={(() => {
-          const featuredProducts = products.filter((product) => product.featured)
-          return featuredProducts.length > 0 ? featuredProducts.slice(0, 4) : products.slice(0, 4)
-        })()}
-        onViewDetails={onViewDetails}
-        onAddToCart={onAddToCart}
-        autoScrollInterval={5000} // Auto-scroll cada 5 segundos
-      />
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-r from-amber-900 via-amber-800 to-orange-900 text-white py-24">
+        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="relative max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+            Mesas de Parota
+            <span className="block text-amber-300">Auténticas</span>
+          </h2>
+          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
+            Cada mesa cuenta una historia. Madera noble mexicana trabajada por artesanos expertos.
+            Piezas únicas que transformen tu hogar.
+          </p>
+          <button
+            onClick={() => onNavigate('products')}
+            className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors transform hover:scale-105"
+          >
+            Ver Colección
+          </button>
+        </div>
+      </section>
 
-      {/* Mesas de Parota Auténticas */}
-      <section className="py-16 bg-gradient-to-r from-amber-50 to-orange-50">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Mesas de Parota Auténticas
-            </h2>
-            <p className="text-xl text-gray-700 mb-6 max-w-2xl mx-auto">
-              Cada mesa cuenta una historia. Madera noble mexicana trabajada por artesanos expertos. Piezas únicas que transforman tu hogar.
-            </p>
-            <button
-              onClick={() => onNavigate('products')}
-              className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors text-lg"
-            >
-              Ver Colección
-            </button>
+          <h3 className="text-3xl font-bold text-center text-gray-800 mb-12">
+            Productos Destacados
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.slice(0, 3).map(product => (
+              <ProductCard 
+                key={product.id} 
+                product={product}
+                onAddToCart={onAddToCart}
+                onViewDetails={onViewDetails}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      <section className="py-12 bg-amber-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <h3 className="text-3xl font-bold text-center text-gray-800 mb-8">Colección Destacada</h3>
+          <ProductCarousel
+            products={carouselProducts}
+            onViewDetails={onViewDetails}
+            onAddToCart={onAddToCart}
+            autoScrollInterval={5000}
+          />
+        </div>
+      </section>
+
       <section className="bg-white/50 py-16">
         <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-3xl font-bold text-center text-gray-800 mb-12">

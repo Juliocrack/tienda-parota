@@ -23,7 +23,7 @@ import useCart from './hooks/useCart';
 function App() {
   const [currentView, setCurrentView] = useState('home');
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [products, setProducts] = useState(staticProducts); // Fallback a datos estáticos
+  const [products, setProducts] = useState(staticProducts);
   
   // Usar el custom hook para el carrito
   const {
@@ -50,7 +50,7 @@ function App() {
     loadProducts();
   }, []);
 
-  // Función para completar la orden (Combinando la limpieza del carrito y redirección)
+  // Función para completar la orden
   const handleOrderComplete = () => {
     clearCart();
     setTimeout(() => {
@@ -58,7 +58,7 @@ function App() {
     }, 5000);
   };
 
-  // Renderizar la vista actual (Lógica de ruteo de HEAD)
+  // Renderizar la vista actual
   const renderView = () => {
     switch (currentView) {
       case 'home':

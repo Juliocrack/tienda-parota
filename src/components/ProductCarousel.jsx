@@ -1,31 +1,20 @@
-// ProductCarousel.jsx
+﻿// ProductCarousel.jsx
 // Componente carrusel que muestra productos de forma deslizable.
 // Permite navegar entre productos con flechas o botones y mostrar detalles con click.
 // Soporta paginación automática y pausa al hover o al interactuar (touch/pointer) para móviles.
 // Props: products (array), onViewDetails (función callback), onAddToCart (función callback),
-//        autoScrollInterval (ms, default 6000) – tiempo entre transiciones automáticas.
+//        autoScrollInterval (ms, default 5000) – tiempo entre transiciones automáticas.
 
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const ProductCarousel = ({ products = [], onViewDetails, onAddToCart, autoScrollInterval = 6000 }) => {
+const ProductCarousel = ({ products = [], onViewDetails, onAddToCart, autoScrollInterval = 5000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false); // control auto-scroll pause
-
-  if (!products || products.length === 0) {
-    return (
-      <div className="text-center py-8 text-gray-500">
-        <p>No hay productos disponibles en el carrusel.</p>
-      </div>
-    );
-  }
-
-  // Determina cuántos elementos se muestran según el ancho
+  const [isPaused, setIsPaused] = useState(false);
   const [itemsPerView, setItemsPerView] = useState(
     typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 3
   );
 
-  // Ajusta itemsPerView cuando el usuario redimensiona la ventana
   useEffect(() => {
     const handleResize = () => {
       setItemsPerView(window.innerWidth < 768 ? 1 : 3);
@@ -36,10 +25,24 @@ const ProductCarousel = ({ products = [], onViewDetails, onAddToCart, autoScroll
 
   const maxIndex = Math.max(0, products.length - itemsPerView);
 
-  // Asegura que el índice actual sea válido si itemsPerView cambia
   useEffect(() => {
     setCurrentIndex((prev) => Math.min(prev, maxIndex));
   }, [itemsPerView, maxIndex]);
+
+  useEffect(() => {
+    if (!autoScrollInterval || autoScrollInterval <= 0 || isPaused) {
+      return undefined;
+    }
+
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => {
+        const next = prev + 1;
+        return next > maxIndex ? 0 : next;
+      });
+    }, autoScrollInterval);
+
+    return () => clearInterval(timer);
+  }, [autoScrollInterval, maxIndex, isPaused]);
 
   const handlePrev = () => {
     setCurrentIndex((prev) => Math.max(0, prev - 1));
@@ -48,35 +51,9 @@ const ProductCarousel = ({ products = [], onViewDetails, onAddToCart, autoScroll
   const handleNext = () => {
     setCurrentIndex((prev) => {
       const next = prev + 1;
-      // Si llegamos al final, vuelve al inicio para efecto de loop continuo
       return next > maxIndex ? 0 : next;
     });
   };
-
-  // Auto-scroll con intervalo configurable y soporte para pausa
-  useEffect(() => {
-    if (autoScrollInterval && autoScrollInterval > 0 && !isPaused) {
-      const timer = setInterval(() => {
-        setCurrentIndex((prev) => {
-          const next = prev + 1;
-          return next > maxIndex ? 0 : next;
-        });
-      }, autoScrollInterval);
-
-      return () => clearInterval(timer);
-    }
-
-    // si está pausado o no hay intervalo válido, no creamos el timer
-    return undefined;
-  }, [autoScrollInterval, maxIndex, isPaused]);
-
-  // Calcula el índice de página actual para los indicadores
-  // El número de páginas es cuantas posiciones diferentes de inicio podemos tener
-  const totalPages = maxIndex + 1;
-  const currentPageIndex = currentIndex;
-
-  // Obtener los productos visibles en el carrusel actual
-  const visibleProducts = products.slice(currentIndex, currentIndex + itemsPerView);
 
   const pauseHandlers = {
     onMouseEnter: () => setIsPaused(true),
@@ -88,11 +65,21 @@ const ProductCarousel = ({ products = [], onViewDetails, onAddToCart, autoScroll
     onTouchCancel: () => setIsPaused(false),
   };
 
+  if (!products || products.length === 0) {
+    return (
+      <div className="text-center py-8 text-gray-500">
+        <p>No hay productos disponibles en el carrusel.</p>
+      </div>
+    );
+  }
+
+  const totalPages = maxIndex + 1;
+  const currentPageIndex = currentIndex;
+  const visibleProducts = products.slice(currentIndex, currentIndex + itemsPerView);
+
   return (
     <div className="relative" {...pauseHandlers}>
-      {/* Contenedor del carrusel */}
       <div className="flex items-center gap-4">
-        {/* Botón anterior */}
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
@@ -102,7 +89,6 @@ const ProductCarousel = ({ products = [], onViewDetails, onAddToCart, autoScroll
           <ChevronLeft className="w-6 h-6" />
         </button>
 
-        {/* Grid de productos visibles */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
           {visibleProducts.map((product) => (
             <div
@@ -146,7 +132,6 @@ const ProductCarousel = ({ products = [], onViewDetails, onAddToCart, autoScroll
           ))}
         </div>
 
-        {/* Botón siguiente */}
         <button
           onClick={handleNext}
           disabled={currentIndex >= maxIndex}
@@ -157,9 +142,8 @@ const ProductCarousel = ({ products = [], onViewDetails, onAddToCart, autoScroll
         </button>
       </div>
 
-      {/* Indicadores de página */}
       <div className="flex justify-center gap-2 mt-4">
-        {Array.from({ length: Math.ceil(products.length / itemsPerView) }).map((_, idx) => (
+        {Array.from({ length: totalPages }).map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentIndex(Math.min(idx * itemsPerView, maxIndex))}

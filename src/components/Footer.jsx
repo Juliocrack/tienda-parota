@@ -69,34 +69,34 @@ const Footer = () => {
               Síguenos en nuestras redes sociales para ver nuestras últimas creaciones.
             </p>
             <div className="flex gap-3">
-              <a 
-                href="https://facebook.com" 
-                target="_blank" 
+              <a
+                href="https://facebook.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="bg-amber-600 hover:bg-amber-700 p-2 rounded-full transition-colors"
               >
                 <Facebook className="w-5 h-5" />
               </a>
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
+              <a
+                href="https://instagram.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="bg-amber-600 hover:bg-amber-700 p-2 rounded-full transition-colors"
               >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a 
-                href="https://wa.me/525512353475" 
-                target="_blank" 
+              <a
+                href="https://wa.me/525512353475"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="bg-amber-600 hover:bg-amber-700 p-2 rounded-full transition-colors"
                 aria-label="WhatsApp"
               >
                 <FaWhatsapp className="w-5 h-5" />
               </a>
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
+              <a
+                href="https://twitter.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="bg-amber-600 hover:bg-amber-700 p-2 rounded-full transition-colors"
               >

@@ -47,7 +47,11 @@
     "lucide-react": "^0.321.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
 >>>>>>> f3098a58 (Mi tienda de mesas de parota)
+=======
+    "react-icons": "^5.5.0",
+>>>>>>> e751ed0e (Agregar carrusel de productos en home)
     "react-scripts": "^5.0.1"
   },
   "browserslist": {

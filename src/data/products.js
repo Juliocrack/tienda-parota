@@ -77,23 +77,23 @@ export const products = [
   },
   {
     id: 4,
-    name: "Mesa de Parota Guitarra",
-    price: 2800,
-    image: "/images/mesa_guitarra.jpg",
+    name: "Mesa patas pino",
+    price: 8500,
+    image: "/images/mesa_patas_pino.jpg",
     images: [
-      "images/mesa_guitarra_2.jpg",
-      "images/mesa_guitarra_3.jpg",
+      "/images/mesa_patas_pino.jpg",
+      "/images/mesa_patas_pino2.jpg",
     ],
-    description: "Mesa circular de parota perfecta para espacios acogedores.",
-    detailedDescription: "El diseño circular fomenta la conversación y crea un ambiente acogedor. Perfecta para comedores íntimos.",
+    description: "Mesa de parota con patas de pino, elegante y resistente.",
+    detailedDescription: "Esta mesa combina la solidez de la parota con las patas de pino, ofreciendo un diseño contemporáneo y robusto. Ideal para comedores modernos y espacios con estilo.",
     features: [
-      "Diseño circular único",
-      "Parota de alta calidad",
-      "Favorece la convivencia",
-      "Base sólida y estable"
+      "Tablero de parota maciza",
+      "Patas de pino reforzadas",
+      "Diseño elegante",
+      "Acabado natural"
     ],
-    dimensions: "140cm diámetro x 75cm",
-    weight: "70 kg",
+    dimensions: "200cm x 100cm x 75cm",
+    weight: "75 kg",
     // stock: 2,
     rating: 5.0
   }

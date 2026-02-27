@@ -1,7 +1,8 @@
 // Footer.jsx
 // Aquí va el componente de pie de página de la tienda online.
 import React from 'react';
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Instagram } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -85,12 +86,13 @@ const Footer = () => {
                 <Instagram className="w-5 h-5" />
               </a>
               <a 
-                href="https://twitter.com" 
+                href="https://wa.me/525512353475" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-amber-600 hover:bg-amber-700 p-2 rounded-full transition-colors"
+                aria-label="WhatsApp"
               >
-                <Twitter className="w-5 h-5" />
+                <FaWhatsapp className="w-5 h-5" />
               </a>
             </div>
           </div>

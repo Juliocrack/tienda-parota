@@ -11,7 +11,7 @@ const Home = ({ products, onNavigate, onAddToCart, onViewDetails }) => {
         products={products.slice(0, 4)} // Mostrar los primeros 4 productos en el carrusel
         onViewDetails={onViewDetails}
         onAddToCart={onAddToCart}
-        autoScrollInterval={4000} // Auto-scroll cada 4 segundos (4000ms)
+        autoScrollInterval={5000} // Auto-scroll cada 5 segundos (se sumó 1s a la configuración anterior)
       />
 
       {/* Mesas de Parota Auténticas */}

@@ -1,7 +1,7 @@
 [build]
-  command = "npm install && npm run build"
+  command = "npm install && chmod -R 755 node_modules/.bin && npm run build"
   publish = "build"
 
 [build.environment]
-  NPM_FLAGS = "--legacy-peer-deps"
   NODE_VERSION = "18"
+  CI = "false"

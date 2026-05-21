@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 
 // Components
 import Header from './components/Header';
@@ -23,7 +23,7 @@ import useCart from './hooks/useCart';
 function App() {
   const [currentView, setCurrentView] = useState('home');
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [products, setProducts] = useState(staticProducts);
+  const [products, setProducts] = useState(staticProducts); // Fallback a datos estáticos
   
   // Usar el custom hook para el carrito
   const {

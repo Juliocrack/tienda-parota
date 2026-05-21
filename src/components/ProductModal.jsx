@@ -4,10 +4,14 @@ import React, { useState } from 'react';
 import { X, Star, Check } from 'lucide-react';
 
 const ProductModal = ({ product, onClose, onAddToCart, onBuyNow }) => {
-  const [imageIndex, setImageIndex] = useState(0);
-  // Asegurarse de que la primera imagen sea la que se usa como preview (product.image)
-  // y luego agregar el resto de product.images sin duplicados.
-  const productImages = (() => {
+  const [mediaIndex, setMediaIndex] = useState(0);
+  // Construir lista de medios: video primero si existe, luego las imágenes.
+  const mediaItems = (() => {
+    const items = [];
+    if (product.video) {
+      items.push({ type: 'video', src: product.video });
+    }
+
     const imgs = [];
     if (product.image) imgs.push(product.image);
     if (Array.isArray(product.images)) {
@@ -15,17 +19,19 @@ const ProductModal = ({ product, onClose, onAddToCart, onBuyNow }) => {
         if (!imgs.includes(img)) imgs.push(img);
       });
     }
-    return imgs.length ? imgs : [product.image];
+
+    imgs.forEach((img) => items.push({ type: 'image', src: img }));
+    return items.length ? items : [{ type: 'image', src: product.image }];
   })();
-  
-  const nextImage = () => {
-    setImageIndex((prev) => (prev + 1) % productImages.length);
+
+  const nextMedia = () => {
+    setMediaIndex((prev) => (prev + 1) % mediaItems.length);
   };
-  
-  const prevImage = () => {
-    setImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length);
+
+  const prevMedia = () => {
+    setMediaIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
   };
-  
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" onClick={onClose}>
       <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
@@ -39,17 +45,24 @@ const ProductModal = ({ product, onClose, onAddToCart, onBuyNow }) => {
           
           {/* Carrusel de imágenes */}
           <div className="relative bg-gray-50">
-            <img 
-              src={productImages[imageIndex]} 
-              alt={`${product.name} - Imagen ${imageIndex + 1}`} 
-              className="w-full h-96 object-contain p-6" 
-            />
-            
-            {/* Controles del carrusel si hay más de una imagen */}
-            {productImages.length > 1 && (
+            {mediaItems[mediaIndex].type === 'video' ? (
+              <video controls className="w-full h-96 object-contain bg-black" key={mediaItems[mediaIndex].src}>
+                <source src={mediaItems[mediaIndex].src} type="video/mp4" />
+                Tu navegador no soporta video HTML5.
+              </video>
+            ) : (
+              <img 
+                src={mediaItems[mediaIndex].src} 
+                alt={`${product.name} - Medio ${mediaIndex + 1}`} 
+                className="w-full h-96 object-contain p-6" 
+              />
+            )}
+
+            {/* Controles del carrusel si hay más de un medio */}
+            {mediaItems.length > 1 && (
               <>
                 <button
-                  onClick={prevImage}
+                  onClick={prevMedia}
                   className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,23 +70,24 @@ const ProductModal = ({ product, onClose, onAddToCart, onBuyNow }) => {
                   </svg>
                 </button>
                 <button
-                  onClick={nextImage}
+                  onClick={nextMedia}
                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
-                
-                {/* Indicadores de imágenes */}
+
+                {/* Indicadores de medios */}
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                  {productImages.map((_, idx) => (
+                  {mediaItems.map((_, idx) => (
                     <button
                       key={idx}
-                      onClick={() => setImageIndex(idx)}
+                      onClick={() => setMediaIndex(idx)}
                       className={`w-2 h-2 rounded-full transition-all ${
-                        idx === imageIndex ? 'bg-amber-600 w-6' : 'bg-white/60'
+                        idx === mediaIndex ? 'bg-amber-600 w-6' : 'bg-white/60'
                       }`}
+                      aria-label={`Medio ${idx + 1}`}
                     />
                   ))}
                 </div>
@@ -81,18 +95,25 @@ const ProductModal = ({ product, onClose, onAddToCart, onBuyNow }) => {
             )}
           </div>
           
-          {/* Miniaturas de imágenes */}
-          {productImages.length > 1 && (
+          {/* Miniaturas de medios */}
+          {mediaItems.length > 1 && (
             <div className="flex gap-2 p-4 overflow-x-auto">
-              {productImages.map((img, idx) => (
+              {mediaItems.map((item, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setImageIndex(idx)}
+                  onClick={() => setMediaIndex(idx)}
                   className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                    idx === imageIndex ? 'border-amber-600' : 'border-gray-200 opacity-60 hover:opacity-100'
+                    idx === mediaIndex ? 'border-amber-600' : 'border-gray-200 opacity-60 hover:opacity-100'
                   }`}
+                  aria-label={item.type === 'video' ? `Video ${idx + 1}` : `Imagen ${idx + 1}`}
                 >
-                  <img src={img} alt={`Miniatura ${idx + 1}`} className="w-full h-full object-cover" />
+                  {item.type === 'video' ? (
+                    <div className="relative w-full h-full bg-black/70 text-white flex items-center justify-center text-xs font-semibold">
+                      VIDEO
+                    </div>
+                  ) : (
+                    <img src={item.src} alt={`Miniatura ${idx + 1}`} className="w-full h-full object-cover" />
+                  )}
                 </button>
               ))}
             </div>

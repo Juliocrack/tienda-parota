@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import ShippingCalculator from '../components/ShippingCalculator';
+import { updateProductStock } from '../services/productService';
 
 const Checkout = ({ cart, getTotalPrice, onOrderComplete }) => {
   const [orderComplete, setOrderComplete] = useState(false);
@@ -17,7 +18,7 @@ const Checkout = ({ cart, getTotalPrice, onOrderComplete }) => {
     paymentMethod: 'transfer'
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!shippingInfo) {
@@ -25,11 +26,22 @@ const Checkout = ({ cart, getTotalPrice, onOrderComplete }) => {
       return;
     }
     
-    setOrderComplete(true);
-    onOrderComplete();
-    setTimeout(() => {
-      setOrderComplete(false);
-    }, 5000);
+    try {
+      // Actualizar stock de cada producto
+      for (const item of cart) {
+        const newStock = item.stock - item.quantity;
+        await updateProductStock(item.id, newStock);
+      }
+      
+      setOrderComplete(true);
+      onOrderComplete();
+      setTimeout(() => {
+        setOrderComplete(false);
+      }, 5000);
+    } catch (error) {
+      console.error('Error al procesar la orden:', error);
+      alert('Error al procesar la orden. Inténtalo de nuevo.');
+    }
   };
 
   const handleChange = (e) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Components
 import Header from './components/Header';
@@ -14,7 +14,8 @@ import Checkout from './pages/Checkout';
 import Contact from './pages/Contact';
 
 // Data
-import { products } from './data/products';
+import { products as staticProducts } from './data/products.mjs';
+import { getProducts } from './services/productService';
 
 // Custom Hook
 import useCart from './hooks/useCart';
@@ -22,6 +23,7 @@ import useCart from './hooks/useCart';
 function App() {
   const [currentView, setCurrentView] = useState('home');
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [products, setProducts] = useState(staticProducts); // Fallback a datos estáticos
   
   // Usar el custom hook para el carrito
   const {
@@ -32,6 +34,21 @@ function App() {
     getTotalPrice,
     getTotalItems
   } = useCart();
+
+  // Cargar productos desde la API
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const apiProducts = await getProducts();
+        if (apiProducts.length > 0) {
+          setProducts(apiProducts);
+        }
+      } catch (error) {
+        console.warn('Usando datos estáticos debido a error en API:', error);
+      }
+    };
+    loadProducts();
+  }, []);
 
   // Función para completar la orden
   const handleOrderComplete = () => {

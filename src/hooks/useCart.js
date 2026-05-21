@@ -7,12 +7,26 @@ const useCart = () => {
 
   // Agregar producto al carrito
   const addToCart = (product, quantity = 1) => {
+    if (product.stock <= 0) {
+      alert('Producto agotado');
+      return;
+    }
+    
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id);
       if (existing) {
+        const newQuantity = existing.quantity + quantity;
+        if (newQuantity > product.stock) {
+          alert(`Solo hay ${product.stock} unidades disponibles`);
+          return prev.map(item =>
+            item.id === product.id 
+              ? { ...item, quantity: product.stock }
+              : item
+          );
+        }
         return prev.map(item =>
           item.id === product.id 
-            ? { ...item, quantity: Math.min(item.quantity + quantity, product.stock) }
+            ? { ...item, quantity: newQuantity }
             : item
         );
       }

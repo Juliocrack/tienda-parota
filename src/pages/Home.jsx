@@ -8,10 +8,13 @@ const Home = ({ products, onNavigate, onAddToCart, onViewDetails }) => {
     <div>
       {/* Carrusel de productos destacados */}
       <ProductCarousel 
-        products={products.slice(0, 4)} // Mostrar los primeros 4 productos en el carrusel
+        products={(() => {
+          const featuredProducts = products.filter((product) => product.featured)
+          return featuredProducts.length > 0 ? featuredProducts.slice(0, 4) : products.slice(0, 4)
+        })()}
         onViewDetails={onViewDetails}
         onAddToCart={onAddToCart}
-        autoScrollInterval={5000} // Auto-scroll cada 5 segundos (se sumó 1s a la configuración anterior)
+        autoScrollInterval={5000} // Auto-scroll cada 5 segundos
       />
 
       {/* Mesas de Parota Auténticas */}

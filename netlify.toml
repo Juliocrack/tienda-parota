@@ -1,0 +1,7 @@
+[build]
+  command = "npm install && chmod -R 755 node_modules/.bin && npm run build"
+  publish = "build"
+
+[build.environment]
+  NODE_VERSION = "18"
+  CI = "false"

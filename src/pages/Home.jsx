@@ -3,9 +3,9 @@ import { Check, Star, MapPin } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import ProductCarousel from '../components/ProductCarousel';
 
-const Home = ({ products, onNavigate, onAddToCart, onViewDetails }) => {
-  const featuredProducts = products.filter((product) => product.featured);
-  const carouselProducts = featuredProducts.length > 0 ? featuredProducts.slice(0, 4) : products.slice(0, 4);
+const Home = ({ products, loading, onNavigate, onAddToCart, onViewDetails }) => {
+  const featuredProducts = loading ? [] : products.filter((product) => product.featured);
+  const carouselProducts = loading ? [] : featuredProducts.length > 0 ? featuredProducts.slice(0, 4) : products.slice(0, 4);
 
   return (
     <div>
@@ -35,16 +35,20 @@ const Home = ({ products, onNavigate, onAddToCart, onViewDetails }) => {
           <h3 className="text-3xl font-bold text-center text-gray-800 mb-12">
             Productos Destacados
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.slice(0, 3).map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onAddToCart={onAddToCart}
-                onViewDetails={onViewDetails}
-              />
-            ))}
-          </div>
+          {loading ? (
+            <div className="text-center py-20 text-lg text-gray-700">Cargando productos...</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {products.slice(0, 3).map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onAddToCart={onAddToCart}
+                  onViewDetails={onViewDetails}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

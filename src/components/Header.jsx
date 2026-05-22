@@ -46,19 +46,35 @@ const Header = ({ currentView, onNavigate, cartItemsCount }) => {
             >
               Contacto
             </button>
+            <button 
+              onClick={() => onNavigate('admin')}
+              className="font-semibold text-gray-600 hover:text-purple-600 transition-colors text-xs"
+              title="Admin"
+            >
+              ⚙️
+            </button>
           </nav>
 
-          <button
-            onClick={() => onNavigate('cart')}
-            className="relative bg-amber-600 hover:bg-amber-700 text-white p-3 rounded-lg transition-colors"
-          >
-            <ShoppingCart className="w-6 h-6" />
-            {cartItemsCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
-                {cartItemsCount}
-              </span>
-            )}
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => onNavigate('admin')}
+              className="hidden md:flex text-gray-600 hover:text-purple-600 text-lg transition-colors"
+              title="Admin Login"
+            >
+              ⚙️
+            </button>
+            <button
+              onClick={() => onNavigate('cart')}
+              className="relative bg-amber-600 hover:bg-amber-700 text-white p-3 rounded-lg transition-colors"
+            >
+              <ShoppingCart className="w-6 h-6" />
+              {cartItemsCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+                  {cartItemsCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </header>

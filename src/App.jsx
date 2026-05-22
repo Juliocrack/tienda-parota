@@ -12,18 +12,23 @@ import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Contact from './pages/Contact';
+import AdminLogin from './pages/AdminLogin';
+import AdminPanel from './pages/AdminPanel';
 
 // Data
 import { products as staticProducts } from './data/products.mjs';
 import { getProducts } from './services/productService';
 
-// Custom Hook
+// Hooks
 import useCart from './hooks/useCart';
+import { useAdminAuth } from './hooks/useAdminAuth';
 
 function App() {
   const [currentView, setCurrentView] = useState('home');
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [products, setProducts] = useState(staticProducts); // Fallback a datos estáticos
+  const [products, setProducts] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const { user } = useAdminAuth();
   
   // Usar el custom hook para el carrito
   const {
@@ -35,16 +40,25 @@ function App() {
     getTotalItems
   } = useCart();
 
+  // Si hay usuario admin autenticado, mostrar panel
+  // Note: admin views handled in renderView to keep hooks stable
+
   // Cargar productos desde la API
   useEffect(() => {
     const loadProducts = async () => {
+      setCargando(true);
       try {
         const apiProducts = await getProducts();
         if (apiProducts.length > 0) {
           setProducts(apiProducts);
+        } else {
+          setProducts(staticProducts);
         }
       } catch (error) {
         console.warn('Usando datos estáticos debido a error en API:', error);
+        setProducts(staticProducts);
+      } finally {
+        setCargando(false);
       }
     };
     loadProducts();
@@ -65,6 +79,7 @@ function App() {
         return (
           <Home
             products={products}
+            loading={cargando}
             onNavigate={setCurrentView}
             onAddToCart={addToCart}
             onViewDetails={setSelectedProduct}
@@ -75,6 +90,7 @@ function App() {
         return (
           <Products
             products={products}
+            loading={cargando}
             onAddToCart={addToCart}
             onViewDetails={setSelectedProduct}
           />
@@ -101,6 +117,13 @@ function App() {
       
       case 'contact':
         return <Contact />;
+
+      case 'admin':
+        return user ? (
+          <AdminPanel />
+        ) : (
+          <AdminLogin onLoginSuccess={() => setCurrentView('home')} />
+        );
       
       default:
         return (

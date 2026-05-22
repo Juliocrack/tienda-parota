@@ -3,7 +3,7 @@
 import React from 'react';
 import ProductCard from '../components/ProductCard';
 
-const Products = ({ products, onAddToCart, onViewDetails }) => {
+const Products = ({ products, loading, onAddToCart, onViewDetails }) => {
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4">
@@ -13,16 +13,21 @@ const Products = ({ products, onAddToCart, onViewDetails }) => {
         <p className="text-center text-gray-600 mb-12">
           Descubre todas nuestras mesas de parota disponibles
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map(product => (
-            <ProductCard 
-              key={product.id} 
-              product={product}
-              onAddToCart={onAddToCart}
-              onViewDetails={onViewDetails}
-            />
-          ))}
-        </div>
+
+        {loading ? (
+          <div className="text-center py-20 text-lg text-gray-700">Cargando productos...</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map(product => (
+              <ProductCard 
+                key={product.id} 
+                product={product}
+                onAddToCart={onAddToCart}
+                onViewDetails={onViewDetails}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const Home = ({ products, loading, onNavigate, onAddToCart, onViewDetails }) => 
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="relative max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-5xl md:text-6xl font-bold mb-6">
-            Mesas de Parota
+            Mesas de Parota JK
             <span className="block text-amber-300">Auténticas</span>
           </h2>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">

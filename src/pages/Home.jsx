@@ -1,5 +1,5 @@
-﻿import React from 'react';
-import { Check, Star, MapPin } from 'lucide-react';
+﻿import React, { useState, useEffect } from 'react';
+import { Check, Star, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import ProductCarousel from '../components/ProductCarousel';
 
@@ -7,26 +7,108 @@ const Home = ({ products, loading, onNavigate, onAddToCart, onViewDetails }) => 
   const featuredProducts = loading ? [] : products.filter((product) => product.featured);
   const carouselProducts = loading ? [] : featuredProducts.length > 0 ? featuredProducts.slice(0, 4) : products.slice(0, 4);
 
+  // Estado para el slider de fotos
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // Imágenes del slider - puedes reemplazar estas URLs con tus propias imágenes
+  const heroImages = [
+    'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=1200&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&h=600&fit=crop'
+  ];
+
+  // Auto-scroll del slider
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [heroImages.length]);
+
+  // Funciones para navegar el slider
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  };
+
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-amber-900 via-amber-800 to-orange-900 text-white py-24">
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="relative max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
-            Mesas de Parota JK
-            <span className="block text-amber-300">Auténticas</span>
-          </h2>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-            Cada mesa cuenta una historia. Madera noble mexicana trabajada por artesanos expertos.
-            Piezas únicas que transformen tu hogar.
-          </p>
-          <button
-            onClick={() => onNavigate('products')}
-            className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors transform hover:scale-105"
-          >
-            Ver Colección
-          </button>
+      {/* Hero Section con Slider de Fotos */}
+      <section className="relative h-[600px] md:h-[700px] overflow-hidden">
+        {/* Slider de imágenes */}
+        <div 
+          className="flex transition-transform duration-700 ease-in-out h-full"
+          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+        >
+          {heroImages.map((image, index) => (
+            <div 
+              key={index}
+              className="min-w-full h-full relative flex-shrink-0"
+            >
+              <img 
+                src={image} 
+                alt={`Mesa de Parota ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Contenido superpuesto */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="relative max-w-7xl mx-auto px-4 text-center">
+            <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
+              Mesas de Parota JK
+              <span className="block text-amber-300">Auténticas</span>
+            </h2>
+            <button
+              onClick={() => onNavigate('products')}
+              className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors transform hover:scale-105"
+            >
+              Ver Colección
+            </button>
+          </div>
+        </div>
+
+        {/* Botones de navegación del slider */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
+          aria-label="Anterior"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
+          aria-label="Siguiente"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        {/* Indicadores del slider */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {heroImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                currentSlide === index 
+                  ? 'bg-amber-500 w-8' 
+                  : 'bg-white/50 hover:bg-white/80'
+              }`}
+              aria-label={`Ir a slide ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
 

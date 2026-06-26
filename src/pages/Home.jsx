@@ -67,7 +67,7 @@ const Home = ({ products, loading, onNavigate, onAddToCart, onViewDetails }) => 
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative max-w-7xl mx-auto px-4 text-center">
             <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Mesas de Parota JK
+              Mesas de Parota
               <span className="block text-amber-300">Auténticas</span>
             </h2>
             <button

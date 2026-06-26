@@ -101,13 +101,12 @@ export const products = [
     id: 5,
     name: "Mesa de Comedor Parota Extensible",
     price: 5200,
-    image: "/images/mesa_extensible.jpg",
+    image: "/images/comedores/parota-comedor-1.jpeg",
     images: [
-      "/images/mesa_extensible.jpg",
-      "/images/mesa_extensible_2.jpg",
-      "/images/mesa_extensible_3.jpg"
+      "/images/comedores/parota-comedor-1.jpeg",
+      "/images/comedores/parota-comedor-1-lat.jpeg"
     ],
-    video: "/videos/mesa_extensible.mp4",
+    video: "/images/comedores/video/comedor-1.mp4",
     description: "Mesa extensible de parota para cenas familiares grandes.",
     detailedDescription: "Mesa de comedor extensible con acabado natural. Ideal para reuniones familiares, su diseño permite adaptarse a espacios pequeños y ampliarse cuando necesitas más lugar. Incluye video de presentación para mostrar su funcionamiento y estilo.",
     features: [
@@ -151,9 +150,9 @@ export const products = [
     price: 4100,
     image: "/images/mesa_terraza.jpg",
     images: [
-      "/images/mesa_terraza.jpg",
-      "/images/mesa_terraza_2.jpg",
-      "/images/mesa_terraza_3.jpg"
+      "/images/comedores/mesa_terraza.jpg",
+      "/images/comedores/mesa_terraza_2.jpg",
+      "/images/comedores/mesa_terraza_3.jpg"
     ],
     description: "Mesa de parota resistente para terraza y espacios al aire libre.",
     detailedDescription: "Perfecta para desayunos o comidas al aire libre, esta mesa de parota está tratada para resistir mejor la humedad y ofrecer una apariencia natural impecable.",

@@ -7,11 +7,11 @@ export const products = [
     price: 3800,
     image: "/images/mesa_cristal.jpg",
     images: [
-      "images/mesa_cristal_3.jpg",
-      "images/mesa_cristal_2.jpg",
-      "images/mesa_cristal_4.jpg",
-      "images/mesa_cristal_5.jpg",
-      "images/mesa_cristal_6.jpg"
+      "/images/mesa_cristal_3.jpg",
+      "/images/mesa_cristal_2.jpg",
+      "/images/mesa_cristal_4.jpg",
+      "/images/mesa_cristal_5.jpg",
+      "/images/mesa_cristal_6.jpg"
     ],
     description: "Mesa de parota maciza con acabado natural. Perfecta para comedor principal.",
     detailedDescription: "Esta hermosa mesa de parota fue cuidadosamente seleccionada y trabajada por artesanos expertos. La madera de parota es conocida por su durabilidad excepcional y sus vetas naturales únicas que hacen de cada pieza una obra de arte irrepetible. El acabado natural resalta la belleza de la madera mientras la protege para uso diario. Ideal para reuniones familiares y cenas especiales.",
@@ -100,7 +100,7 @@ export const products = [
   {
     id: 5,
     name: "Mesa de Comedor Parota Extensible",
-    price: 5200,
+    price: 28000,
     image: "/images/comedores/parota-comedor-1.jpeg",
     images: [
       "/images/comedores/parota-comedor-1.jpeg",
